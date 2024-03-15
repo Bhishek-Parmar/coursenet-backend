@@ -1,5 +1,8 @@
 const express = require("express");
 const app = express();
+const connectToDb = require("./connectToDb");
+
+connectToDb();
 
 app.get("/", (req, res) => res.send("Express on Vercel"));
 
