@@ -11,13 +11,21 @@ const Course = require("../models/courseModel");
 // };
 
 const getAllCourses = async (req, res) => {
+  //isme agar direct /api/courses chala diya toh pure 5000 course aayenge aur agar ?page=1 de diya toh by default 10 limit h , par
+  // ?limit=kuchh bhi likh skte . aise /api/course?page=2&limit=20 bhi kr skte. aur agar limit ke sang kuchh galat hua toh by default limit
+  // 1 set kr di h , if else se apan dekh liya ki agar pagination use kr rhe toh 10 ki limit laga do bydefault
   try {
     const totalCount = await Course.countDocuments();
     // console.log(totalCount);
     const page = req.query.page ? parseInt(req.query.page) : 1;
-    const limit = req.query.limit
-      ? parseInt(req.query.limit)
-      : Math.max(totalCount, 10);
+    let limit = 1;
+    if (req.query.page) {
+      limit = req.query.limit ? parseInt(req.query.limit) : 10;
+    } else {
+      limit = req.query.limit
+        ? parseInt(req.query.limit)
+        : Math.max(totalCount, 10);
+    }
 
     // Calculate the skip value based on the page and limit
     const skip = (page - 1) * limit;
