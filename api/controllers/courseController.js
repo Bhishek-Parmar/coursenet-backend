@@ -1,11 +1,35 @@
 const Course = require("../models/courseModel");
 
 // Controller function to retrieve all courses
+// const getAllCourses = async (req, res) => {
+//   try {
+//     const courses = await Course.find();
+//     res.json(courses);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
+
 const getAllCourses = async (req, res) => {
   try {
-    const courses = await Course.find();
+    const page = req.query.page ? parseInt(req.query.page) : 1;
+    const limit = req.query.limit ? parseInt(req.query.limit) : 10; // Default limit is 10
+
+    // Calculate the skip value based on the page and limit
+    const skip = (page - 1) * limit;
+
+    // Fetch courses using pagination
+    const courses = await Course.find().skip(skip).limit(limit);
+
+    // Check if there are no courses found
+    if (!courses || courses.length === 0) {
+      return res.status(404).json({ message: "No courses found" });
+    }
+
+    // Return the array of courses
     res.json(courses);
   } catch (error) {
+    // Send error response if there's an issue
     res.status(500).json({ error: error.message });
   }
 };
