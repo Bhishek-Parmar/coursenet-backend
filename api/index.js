@@ -7,8 +7,10 @@ const bodyParser = require("body-parser");
 
 connectToDb();
 app.get("/", (req, res) => res.send("Express on Vercel"));
+app.use(express.json());
 
-// Routes
+// Routes---------------
+//course routes
 app.get("/api/courses", coursesController.getAllCourses);
 app.get("/api/courses/:id", coursesController.getCourseById);
 app.post("/api/courses", coursesController.createCourse);
