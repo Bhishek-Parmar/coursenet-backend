@@ -3,7 +3,7 @@ const dotenv = require("dotenv");
 
 dotenv.config({ path: "./.env" });
 
-console.log(process.env.DB_URL);
+// console.log(process.env.DB_URL);
 
 const clientOptions = {
   serverApi: { version: "1", strict: true, deprecationErrors: true },
@@ -17,9 +17,8 @@ async function connectToDb() {
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await mongoose.disconnect();
+  } catch (error) {
+    console.log(error);
   }
 }
 // run().catch(console.dir);
