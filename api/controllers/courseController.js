@@ -12,8 +12,11 @@ const Course = require("../models/courseModel");
 
 const getAllCourses = async (req, res) => {
   try {
+    const totalCount = await Course.countDocuments();
     const page = req.query.page ? parseInt(req.query.page) : 1;
-    const limit = req.query.limit ? parseInt(req.query.limit) : 10; // Default limit is 10
+    const limit = req.query.limit
+      ? parseInt(req.query.limit)
+      : Math.max(totalCount, 10);
 
     // Calculate the skip value based on the page and limit
     const skip = (page - 1) * limit;
