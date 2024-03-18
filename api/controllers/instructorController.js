@@ -40,10 +40,10 @@ const registerInstructor = async (req, res) => {
 // Instructor Login
 const loginInstructor = async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
     // Find instructor by username
-    const instructor = await Instructor.findOne({ username });
+    const instructor = await Instructor.findOne({ email });
     if (!instructor) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
