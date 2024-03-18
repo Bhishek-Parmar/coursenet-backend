@@ -18,6 +18,16 @@ const courseSchema = new mongoose.Schema({
   main_price: String,
   course_flag: String, // Optional field, adjust as needed
   students_count: String,
+  instructor: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Instructor",
+  },
+  students: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Student",
+    },
+  ],
 });
 
 // const Course = mongoose.model("Course", courseSchema);
