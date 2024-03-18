@@ -36,10 +36,10 @@ const registerStudent = async (req, res) => {
 // Student Login
 const loginStudent = async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
     // Find student by username
-    const student = await Student.findOne({ username });
+    const student = await Student.findOne({ email });
     if (!student) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
