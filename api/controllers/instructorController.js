@@ -69,7 +69,21 @@ const loginInstructor = async (req, res) => {
   }
 };
 
+const instructorById = async (req, res) => {
+  try {
+    const instructorId = req.params.id;
+    const instructor = await Instructor.findById(instructorId);
+    if (!instructor) {
+      return res.status(404).json({ message: "instrucor not found" });
+    }
+    res.json(instructor);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 module.exports = {
   registerInstructor,
   loginInstructor,
+  instructorById,
 };

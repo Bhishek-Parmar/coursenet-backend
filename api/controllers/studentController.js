@@ -67,7 +67,21 @@ const loginStudent = async (req, res) => {
   }
 };
 
+const studentById = async (req, res) => {
+  try {
+    const studentId = req.params.id;
+    const student = await Student.findById(studentId);
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+    res.json(student);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 module.exports = {
   registerStudent,
   loginStudent,
+  studentById,
 };
